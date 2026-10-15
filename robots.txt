@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://znk-v.github.io/ctl33/sitemap.xml
