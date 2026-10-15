@@ -236,13 +236,36 @@ section{scroll-margin-top:76px}
 .method .photo img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:8% 50%}
 .method figcaption{margin-top:10px;font-size:.94rem;color:var(--on-ink-muted)}
 
-/* Zone */
-.zone{display:grid;gap:32px}
-@media (min-width:960px){.zone{grid-template-columns:1fr 1.4fr;gap:64px}}
-.towns{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,156px),1fr));column-gap:24px;font-weight:500}
-.towns li{padding:9px 0;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
-.towns li.done::after{content:"chantier";margin-left:auto;font:600 .6875rem/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--leaf-text);border:1px solid currentColor;border-radius:3px;padding:3px 5px}
-.zone-note{margin-top:18px;font-size:.98rem;color:var(--muted)}
+/* Zone : mur de communes en 3D (adapté de 21st.dev 3d-testimonials / Marquee) */
+.zone{display:grid;gap:36px;align-items:center}
+@media (min-width:960px){.zone{grid-template-columns:.85fr 1.15fr;gap:56px}}
+.zone-stats{display:flex;gap:32px;margin:28px 0 0}
+.zone-stats div{border-left:3px solid var(--leaf);padding-left:14px}
+.zone-stats dt{font:700 2.75rem/1 var(--display);color:var(--ink);font-variant-numeric:tabular-nums}
+.zone-stats dd{margin:4px 0 0;font-size:.94rem;color:var(--muted)}
+.zone-note{margin-top:24px;font-size:.98rem;color:var(--muted);max-width:46ch}
+.zone-note a{color:var(--ink);font-weight:600}
+.wall{position:relative;height:clamp(380px,46vw,540px);overflow:hidden;border-radius:12px;background:#E9EBE4;display:flex;align-items:center;justify-content:center;perspective:640px;margin:0 calc(var(--gutter) * -1)}
+@media (min-width:960px){.wall{margin:0}}
+.wall-tilt{display:flex;gap:14px;transform:translateX(-40px) translateZ(-60px) rotateX(20deg) rotateY(-10deg) rotateZ(20deg);transform-style:preserve-3d}
+.mq{--gap:12px;display:flex;flex-direction:column;gap:var(--gap);flex:none}
+.mq-track{display:flex;flex-direction:column;gap:var(--gap);margin:0;padding:0;list-style:none;animation:mq-up var(--duration,44s) linear infinite;will-change:transform}
+.mq.rev .mq-track{animation-direction:reverse}
+.wall:hover .mq-track{animation-play-state:paused}
+@keyframes mq-up{from{transform:translateY(0)}to{transform:translateY(calc(-100% - var(--gap)))}}
+.town{width:190px;display:flex;align-items:center;gap:10px;padding:11px 12px;background:var(--card);border:1px solid var(--line);border-radius:8px}
+.town .pin{width:30px;height:30px;flex:none;border-radius:50%;display:grid;place-items:center;background:#E3EEDD;color:var(--leaf-text)}
+.town .pin svg{width:16px;height:16px}
+.town b{display:block;font-weight:600;font-size:.98rem;line-height:1.2}
+.town small{display:block;font-size:.8125rem;color:var(--muted);font-variant-numeric:tabular-nums;margin-top:2px}
+.town.done{background:var(--ink);border-color:var(--ink);color:#fff}
+.town.done .pin{background:var(--leaf);color:#fff}
+.town.done small{color:var(--leaf-bright);font-weight:600}
+.wall-fade{position:absolute;inset:0;pointer-events:none;background:
+  linear-gradient(to bottom,#E9EBE4 0,transparent 22%,transparent 78%,#E9EBE4 100%),
+  linear-gradient(to right,#E9EBE4 0,transparent 18%,transparent 82%,#E9EBE4 100%)}
+@media (max-width:599px){.town{width:158px;padding:9px 10px}.town b{font-size:.9rem}.wall-tilt{gap:10px;transform:translateX(-40px) translateZ(-100px) rotateX(20deg) rotateY(-10deg) rotateZ(20deg)}}
+@media (prefers-reduced-motion:reduce){.mq-track{animation:none}}
 
 /* Devis */
 .quote{display:grid;gap:32px}
@@ -509,37 +532,24 @@ section{scroll-margin-top:76px}
 
 <section class="sec" id="zone" aria-labelledby="h-zone">
   <div class="wrap zone">
-    <div>
+    <div class="zone-text">
       <p class="eyebrow">Zone d'intervention</p>
       <h2 id="h-zone">Bordeaux, sa métropole et toute la Gironde</h2>
-      <p class="lead" style="margin-top:16px">CTL33 se déplace dans tout le département. Les communes marquées « chantier » ont déjà vu passer le camion.</p>
+      <p class="lead" style="margin-top:16px">CTL33 se déplace dans tout le département, de la métropole au Bassin d'Arcachon. Les cartes sombres signalent les communes où le camion est déjà passé.</p>
+      <dl class="zone-stats">
+        <div><dt>51</dt><dd>communes listées</dd></div>
+        <div><dt>4</dt><dd>avec un chantier publié</dd></div>
+      </dl>
+      <p class="zone-note">Votre commune n'apparaît pas ? Appelez quand même au <a class="btn-num" href="tel:+33636254763">06 36 25 47 63</a> : l'intervention couvre toute la Gironde.</p>
     </div>
-    <div>
-      <ul class="towns">
-        <li class="done">Bordeaux</li>
-        <li class="done">Pessac</li>
-        <li class="done">Cestas</li>
-        <li class="done">Saint-Médard-en-Jalles</li>
-        <li>Mérignac</li>
-        <li>Talence</li>
-        <li>Bègles</li>
-        <li>Villenave-d'Ornon</li>
-        <li>Gradignan</li>
-        <li>Canéjan</li>
-        <li>Léognan</li>
-        <li>Le Haillan</li>
-        <li>Eysines</li>
-        <li>Le Bouscat</li>
-        <li>Bruges</li>
-        <li>Blanquefort</li>
-        <li>Martignas-sur-Jalle</li>
-        <li>Saint-Jean-d'Illac</li>
-        <li>Saint-Aubin-de-Médoc</li>
-        <li>Lormont</li>
-        <li>Cenon</li>
-        <li>Floirac</li>
-      </ul>
-      <p class="zone-note">Votre commune n'apparaît pas ? Appelez quand même : l'intervention couvre toute la Gironde.</p>
+    <div class="wall" aria-label="Communes desservies par CTL33" role="group">
+      <div class="wall-tilt">
+          <div class="mq" style="--duration:44s"><ul class="mq-track"><li class="town done"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Bordeaux</b><small>Chantier réalisé</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Mérignac</b><small>33700</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Gradignan</b><small>33170</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Eysines</b><small>33320</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Martignas-sur-Jalle</b><small>33127</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Lormont</b><small>33310</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Bouliac</b><small>33270</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Parempuyre</b><small>33290</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>La Brède</b><small>33650</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Saint-Loubès</b><small>33450</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Lacanau</b><small>33680</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Andernos-les-Bains</b><small>33510</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Arcachon</b><small>33120</small></span></li></ul></div>
+          <div class="mq rev" style="--duration:52s"><ul class="mq-track"><li class="town done"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Pessac</b><small>Chantier réalisé</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Talence</b><small>33400</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Canéjan</b><small>33610</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Le Bouscat</b><small>33110</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Saint-Jean-d'Illac</b><small>33127</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Cenon</b><small>33150</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Artigues-près-Bordeaux</b><small>33370</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Le Pian-Médoc</b><small>33290</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Saucats</b><small>33650</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Saint-André-de-Cubzac</b><small>33240</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Mios</b><small>33380</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Lège-Cap-Ferret</b><small>33950</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Salles</b><small>33770</small></span></li></ul></div>
+          <div class="mq" style="--duration:40s"><ul class="mq-track"><li class="town done"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Cestas</b><small>Chantier réalisé</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Bègles</b><small>33130</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Léognan</b><small>33850</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Bruges</b><small>33520</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Saint-Aubin-de-Médoc</b><small>33160</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Floirac</b><small>33270</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Carbon-Blanc</b><small>33560</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Cadaujac</b><small>33140</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Latresne</b><small>33360</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Libourne</b><small>33500</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Biganos</b><small>33380</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Gujan-Mestras</b><small>33470</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Langon</b><small>33210</small></span></li></ul></div>
+          <div class="mq rev" style="--duration:48s"><ul class="mq-track"><li class="town done"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Saint-Médard-en-Jalles</b><small>Chantier réalisé</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Villenave-d'Ornon</b><small>33140</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Le Haillan</b><small>33185</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Blanquefort</b><small>33290</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Le Taillan-Médoc</b><small>33320</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Bassens</b><small>33530</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Ambarès-et-Lagrave</b><small>33440</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Martillac</b><small>33650</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Créon</b><small>33670</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Castelnau-de-Médoc</b><small>33480</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>Audenge</b><small>33980</small></span></li><li class="town"><span class="pin" aria-hidden="true"><svg><use href="#i-pin"/></svg></span><span><b>La Teste-de-Buch</b><small>33260</small></span></li></ul></div>
+      </div>
+      <span class="wall-fade" aria-hidden="true"></span>
     </div>
   </div>
 </section>
@@ -740,6 +750,17 @@ section{scroll-margin-top:76px}
     }
   });
 })();
+
+/* Mur de communes : deux copies par colonne pour une boucle sans couture */
+document.querySelectorAll('.mq').forEach(function(col){
+  var track = col.querySelector('.mq-track');
+  for (var i = 0; i < 2; i++){
+    var c = track.cloneNode(true);
+    c.setAttribute('aria-hidden', 'true');
+    c.removeAttribute('aria-label');
+    col.appendChild(c);
+  }
+});
 
 /* Formulaire : puces, validation, envoi AJAX, repli SMS */
 (function(){
